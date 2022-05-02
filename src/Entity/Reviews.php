@@ -13,6 +13,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=ReviewsRepository::class)
  * @ApiResource(
+ *     collectionOperations={"GET", "POST"},
+ *     itemOperations={"GET", "PUT", "PATCH"},
  *     normalizationContext={
  *       "groups"={"reviews_read"}
  *     }
