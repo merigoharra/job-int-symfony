@@ -7,13 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-
-
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
  * @ORM\Entity(repositoryClass=ReviewsRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={
+ *       "groups"={"reviews_read"}
+ *     }
+ * )
  * @ApiFilter(SearchFilter::class)
  */
 class Reviews
@@ -22,21 +25,25 @@ class Reviews
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"reviews_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"reviews_read"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=Stories::class, inversedBy="reviews")
+     * @Groups({"reviews_read"})
      */
     private $story;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviews")
+     * @Groups({"reviews_read"})
      */
     private $user;
 
