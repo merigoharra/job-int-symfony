@@ -13,6 +13,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 
 /**
@@ -25,6 +28,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"firstName":"partial", "lastName", "id"})
+ * @UniqueEntity("email", message="This email is already used")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -39,6 +43,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"users_read"})
+     * @Assert\NotBlank(message="Cannot be blank, an email must be provided")
+     * @Assert\Email(message="must be a valid Email")
      */
     private $email;
 
@@ -52,6 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Groups({"users_read"})
+     * @Assert\NotBlank(message="Cannot be blank, a password must be provided")
      */
     private $password;
 
@@ -72,12 +79,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"users_read", "stories_read", "reviews_read"})
+     * @Assert\NotBlank(message="Cannot be blank, a firstName must be provided")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"users_read", "stories_read", "reviews_read"})
+     * @Assert\NotBlank(message="Cannot be blank, a lastName must be provided")
      */
     private $lastName;
 

@@ -11,6 +11,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\NotBlank as NotBlank;
 
 
 /**
@@ -37,12 +38,14 @@ class Stories
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"stories_read"})
+     * @NotBlank(message="Cannot be Blank, a title must be provided")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"stories_read"})
+     * @NotBlank(message="Cannot be Blank, a content must be provided")
      */
     private $content;
 
@@ -57,6 +60,7 @@ class Stories
      * @ORM\OneToMany(targetEntity=Reviews::class, mappedBy="story")
      * @Groups({"stories_read"})
      * @ApiSubresource()
+     * @NotBlank(message="Cannot be Blank, a User routes must be provided as /api/users/{id}")
      */
     private $reviews;
 
