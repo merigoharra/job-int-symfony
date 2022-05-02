@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\StoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -55,6 +56,7 @@ class Stories
     /**
      * @ORM\OneToMany(targetEntity=Reviews::class, mappedBy="story")
      * @Groups({"stories_read"})
+     * @ApiSubresource()
      */
     private $reviews;
 

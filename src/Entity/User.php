@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -57,12 +58,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Stories::class, mappedBy="user")
      * @Groups({"users_read"})
+     * @ApiSubresource()
      */
     private $stories;
 
     /**
      * @ORM\OneToMany(targetEntity=Reviews::class, mappedBy="user")
      * @Groups({"users_read"})
+     * @ApiSubresource()
      */
     private $reviews;
 
