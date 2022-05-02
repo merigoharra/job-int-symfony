@@ -2,15 +2,29 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource(
+ *     collectionOperations={"GET", "POST"},
+ *     itemOperations={"GET", "PUT", "PATCH"},
+ *     normalizationContext={
+ *       "groups"={"users_read"}
+ *     }
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"firstName":"partial", "lastName", "id"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -18,42 +32,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"users_read", "stories_read", "reviews_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"users_read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"users_read"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"users_read"})
      */
     private $password;
 
     /**
      * @ORM\OneToMany(targetEntity=Stories::class, mappedBy="user")
+     * @Groups({"users_read"})
+     * @ApiSubresource()
      */
     private $stories;
 
     /**
      * @ORM\OneToMany(targetEntity=Reviews::class, mappedBy="user")
+     * @Groups({"users_read"})
+     * @ApiSubresource()
      */
     private $reviews;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"users_read", "stories_read", "reviews_read"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"users_read", "stories_read", "reviews_read"})
      */
     private $lastName;
 

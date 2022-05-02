@@ -2,13 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\StoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=StoriesRepository::class)
+ * @ApiResource(
+ *     collectionOperations={"GET", "POST"},
+ *     itemOperations={"GET", "PUT", "PATCH"},
+ *     normalizationContext={
+ *       "groups"={"stories_read"}
+ *     }
+ * )
+ * @ApiFilter(SearchFilter::class)
  */
 class Stories
 {
@@ -16,27 +30,33 @@ class Stories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"stories_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"stories_read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"stories_read"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="stories")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"stories_read"})
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=Reviews::class, mappedBy="story")
+     * @Groups({"stories_read"})
+     * @ApiSubresource()
      */
     private $reviews;
 

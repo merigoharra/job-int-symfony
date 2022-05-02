@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Reviews;
+use App\Entity\Stories;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Reviews>
+ * @extends ServiceEntityRepository<Stories>
  *
- * @method Reviews|null find($id, $lockMode = null, $lockVersion = null)
- * @method Reviews|null findOneBy(array $criteria, array $orderBy = null)
- * @method Reviews[]    findAll()
- * @method Reviews[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Stories|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Stories|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Stories[]    findAll()
+ * @method Stories[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReviewsRepository extends ServiceEntityRepository
+class StoriesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Reviews::class);
+        parent::__construct($registry, Stories::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Reviews $entity, bool $flush = true): void
+    public function add(Stories $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class ReviewsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Reviews $entity, bool $flush = true): void
+    public function remove(Stories $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
