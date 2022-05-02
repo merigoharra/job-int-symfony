@@ -10,7 +10,7 @@ use App\Entity\Stories;
 
 class StoriesDateTimeSubscriber implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents() : array
     {
         return [
             KernelEvents::VIEW => ['setCreatedAtDateTime', EventPriorities::PRE_WRITE]
@@ -29,6 +29,10 @@ class StoriesDateTimeSubscriber implements EventSubscriberInterface
                 if(!$isCreated) {
                     $stories->setCreatedAt(new \DateTime());
                 }
+                $stories->setUpdatedAt(new \DateTime());
+            }
+            if($method =="PUT" || $method == "PATCH")
+            {
                 $stories->setUpdatedAt(new \DateTime());
             }
         }
