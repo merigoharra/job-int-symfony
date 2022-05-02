@@ -5,10 +5,16 @@ namespace App\Entity;
 use App\Repository\ReviewsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
+
+
 
 /**
  * @ORM\Entity(repositoryClass=ReviewsRepository::class)
  * @ApiResource
+ * @ApiFilter(SearchFilter::class)
  */
 class Reviews
 {

@@ -6,4 +6,4 @@ api_platform:
     swagger:
         versions: [3]
     defaults:
-        pagination_enabled: false
+        pagination_enabled: true
