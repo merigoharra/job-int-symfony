@@ -43,7 +43,8 @@ class AppFixtures extends Fixture {
                 $story = new Stories();
                 $story->setUser($user)
                        ->setTitle($faker->sentence(6, true))
-                       ->setContent($faker->realText(mt_rand(50, 200)));
+                       ->setContent($faker->realText(mt_rand(50, 200)))
+                       ->setCreatedAt($faker->dateTime);
                 $manager->persist($story);
                 // Create fake Review
                 for($r=0; $r< mt_rand(1,10); $r++){
