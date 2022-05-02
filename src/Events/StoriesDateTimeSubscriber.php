@@ -23,6 +23,9 @@ class StoriesDateTimeSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
         if($stories instanceof Stories)
         {
+            /**
+             * On Stories Creation it will create an CreateAt and UpdateAt
+             */
             if($method =="POST")
             {
                 $isCreated = $stories->getCreatedAt();
@@ -31,6 +34,9 @@ class StoriesDateTimeSubscriber implements EventSubscriberInterface
                 }
                 $stories->setUpdatedAt(new \DateTime());
             }
+            /**
+             * On Stories modification update the updatedAt
+             */
             if($method =="PUT" || $method == "PATCH")
             {
                 $stories->setUpdatedAt(new \DateTime());
