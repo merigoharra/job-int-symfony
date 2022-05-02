@@ -59,18 +59,18 @@ class Stories
     /**
      * @ORM\OneToMany(targetEntity=Reviews::class, mappedBy="story")
      * @Groups({"stories_read"})
-     * @ApiSubresource()
-     * @NotBlank(message="Cannot be Blank, a User routes must be provided as /api/users/{id}")
      */
     private $reviews;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"stories_read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"stories_read"})
      */
     private $updatedAt;
 
