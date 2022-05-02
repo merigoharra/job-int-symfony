@@ -59,10 +59,20 @@ class Stories
     /**
      * @ORM\OneToMany(targetEntity=Reviews::class, mappedBy="story")
      * @Groups({"stories_read"})
-     * @ApiSubresource()
-     * @NotBlank(message="Cannot be Blank, a User routes must be provided as /api/users/{id}")
      */
     private $reviews;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups({"stories_read"})
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"stories_read"})
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -136,6 +146,30 @@ class Stories
                 $review->setStory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
